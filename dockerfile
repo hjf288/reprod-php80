@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-buster
+FROM php:8.2-fpm-buster
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -60,7 +60,7 @@ RUN curl -L https://download.newrelic.com/php_agent/archive/10.11.0.3/newrelic-p
 
 COPY configs/newrelic.ini /usr/local/etc/php/conf.d/newrelic.ini
 
-RUN curl -o blackfire-probe.deb https://packages.blackfire.io/debian/pool/any/main/b/blackfire-php/blackfire-php_1.87.2_amd64.deb \
+RUN curl -o blackfire-probe.deb https://packages.blackfire.io/debian/pool/any/main/b/blackfire-php/blackfire-php_1.88.1_amd64.deb \
   && dpkg -i blackfire-probe.deb \
   && rm blackfire-probe.deb; \
   curl -o blackfire.deb https://packages.blackfire.io/debian/pool/any/main/b/blackfire/blackfire_2.16.1_amd64.deb \
