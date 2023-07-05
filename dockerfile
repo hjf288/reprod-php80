@@ -79,14 +79,14 @@ RUN PHP_VERSION=$(php -v | head -n1 | cut -d' ' -f2 | cut -d. -f1-2) \
     && echo "extension=sourceguardian.so" > /usr/local/etc/php/conf.d/15-sourceguardian.ini \
     && rm -rf /tmp/sourceguardian
 
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -d 'opcache.enable_cli=0' -- --quiet; \
+RUN export TZ='Europe/London'; wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -d 'opcache.enable_cli=0' -- --quiet; \
   cp composer.phar /usr/local/bin/composer1; \
   wget https://raw.githubusercontent.com/composer/getcomposer.org/dadb501680566074a956f0a52f8e87a3612b0eae/web/installer -O - -q | php -d 'opcache.enable_cli=0' -- --quiet; \
   cp composer.phar /usr/local/bin/composer2; \
   update-alternatives --install /usr/bin/composer composer /usr/local/bin/composer1 10; \
   update-alternatives --install /usr/bin/composer composer /usr/local/bin/composer2 10; \
-  composer1 self-update --1; \
-  composer2 self-update --2;
+  /usr/local/bin/composer1 self-update --1; \
+  /usr/local/bin/composer2 self-update --2;
 
 COPY entrypoint.sh /usr/local/bin/
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
